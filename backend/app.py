@@ -10,7 +10,7 @@ app = Flask(__name__)
 user_test = {"username": "john", "password": "87654321"}
 
 @app.route("/login", methods=["POST"])
-def teste():
+def login():
     dados = request.get_json()
     if dados.get("username") == user_test["username"] and dados.get("password") == user_test["password"]:
         payload = {"username":dados.get("username"),"exp":datetime.now()+timedelta(hours=20)}
