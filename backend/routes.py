@@ -19,6 +19,22 @@ def teste():
     else:
         return "Usuário e/ou senha incorretos", 401
 
+@app.route("/dashboard", methods=["GET"])
+def dashboard():
+    header = request.headers.get("Authorization")
+    if header is None:
+        return "Deu errado!", 401
+    else:
+        token = header.split(" ")[1]
+        try:
+            cracha = jwt.decode(token, chave, algorithms=["HS256"])
+            return cracha
+
+        except jwt.ExpiredSignatureError:
+            return "Tempo expirado! Faça login novamente.", 401
+        
+        except jwt.InvalidTokenError:            
+            return "Houve um erro. . .", 401
 
 if __name__ == "__main__":
     app.run(debug = True)
